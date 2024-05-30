@@ -6,9 +6,9 @@ from mss import mss
 
 WINDOW_SIZE = 10
 TOLERANCE = 0.30
-running_average_arr = [0] * WINDOW_SIZE
+running_average_arr = [0.0] * WINDOW_SIZE
 
-template = cv2.imread("fass4.png")
+template = cv2.imread(".\\images\\fass4.png")
 template = cv2.Canny(template, 50, 150)
 (h, w) = template.shape[:2]
 start_time = time.time()
@@ -25,9 +25,8 @@ with mss() as sct:
 
         result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF_NORMED)
         (_, maxVal, _, maxLoc) = cv2.minMaxLoc(result)
-        #if found is None or maxVal > found[0]:
 
-        running_average_arr.pop(0)
+        running_average_arr.pop(0) 
         running_average_arr.append(maxVal)
         running_average = np.average(running_average_arr)
 
